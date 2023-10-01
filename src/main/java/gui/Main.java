@@ -1,8 +1,9 @@
+package gui;
 import javafx.application.Application;
 
 public class Main {
 
     public static void main(String[] args) {
-        Application.launch(RankingInterface.class,(String) null);
+        Application.launch(Home.class,(String) null);
     }
 }

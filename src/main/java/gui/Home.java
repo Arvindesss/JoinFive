@@ -1,3 +1,5 @@
+package gui;
+
 import java.awt.Label;
 import java.util.Objects;
 import javafx.application.Application;
@@ -21,7 +23,7 @@ import javafx.scene.text.FontWeight;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 
-public class RankingInterface extends Application {
+public class Home extends Application {
 
   @Override
   public void start(Stage primaryStage) {
@@ -57,6 +59,7 @@ public class RankingInterface extends Application {
     leftButton.setOnAction(event -> {
       leftButton.setStyle("-fx-background-color: red; -fx-text-fill: white;");
       rightButton.setStyle("-fx-background-color: black; -fx-text-fill: white;");
+      // dans la claase jeu; mode = 1
       
     });
     
