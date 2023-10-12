@@ -1,0 +1,17 @@
+@font-face {
+    -fx-font-family: Inter;
+    src: url('../fonts/inter/static/Inter-Bold.ttf');
+}
+
+* {
+    -fx-font-family: Inter;
+}
+
+.title {
+    -fx-background-color: #FFB4B4;
+    -fx-background-radius: 10px;
+    -fx-font-size: 30px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #995C5C;
+    -fx-padding: 10px;
+}
