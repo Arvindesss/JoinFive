@@ -56,7 +56,7 @@ public class MenuView extends Application {
         // label score
         //scoreLabel.setText("Score : " + this.gv.getGrid().getPossiblePoint().size());
         // label mode
-        if (gui.Home.mode) {
+        if (Home.mode) {
             mode.setText("Mode de jeu : 5D");
         } else {
             mode.setText("Mode de jeu : 5T");

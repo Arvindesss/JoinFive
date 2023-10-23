@@ -1,11 +1,11 @@
 package gui.view;
 
+import gui.controller.GameEventHandler;
+import gui.model.CircleGrid;
 import gui.model.Coordinates;
-import gui.model.JFLine;
 import javafx.application.Application;
 import javafx.scene.Group;
 import javafx.scene.Scene;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -13,7 +13,6 @@ import javafx.scene.shape.Line;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
 public class JoinFiveGridView extends Application {
@@ -21,12 +20,16 @@ public class JoinFiveGridView extends Application {
     private static int NB_ROWS = 17;
     private static int NB_COLUMNS = 17;
     private static int TILE_SPACE = 50;
+    private CircleGrid circleGrid = new CircleGrid();
+    private TilePane pane = new TilePane(TILE_SPACE, TILE_SPACE);
+    private Group group = new Group(pane);
 
-    TilePane pane = new TilePane(TILE_SPACE, TILE_SPACE);
-
-    Group group = new Group(pane);
-
-    private JoinFiveGridDrawer joinFiveGridDrawer = new JoinFiveGridDrawer();
+    /*public JoinFiveGridView() {
+    }
+*/
+   /* public JoinFiveGridView(CircleGrid circleGrid) {
+        this.circleGrid = circleGrid;
+    }*/
 
     @Override
     public void start(Stage stage) {
@@ -44,7 +47,6 @@ public class JoinFiveGridView extends Application {
 
                 final double startX = (col * (pane.hgapProperty().doubleValue() + pane.getTileWidth()));
                 Line colLine = new Line(startX, 0, startX, NB_ROWS * (TILE_SPACE + pane.getTileHeight()));
-                System.out.println(startX);
                 colLine.setStroke(Color.GRAY);
                 group.getChildren().add(colLine);
 
@@ -52,7 +54,11 @@ public class JoinFiveGridView extends Application {
                 Circle point = new Circle(5);
                 point.setFill(Color.BLACK);
 
-                point.setOnMouseClicked(this::activateCircleEvent);
+                int finalCol = col;
+                int finalRow = row;
+                point.setOnMouseClicked((x) -> {
+                    GameEventHandler.addCircleEvent(x, Coordinates.of(finalCol, finalRow), circleGrid, group);
+                });
                 point.setOpacity(0);
                 circles.add(point);
 
@@ -67,47 +73,13 @@ public class JoinFiveGridView extends Application {
 
                 group.getChildren().add(point);
             }
-            this.joinFiveGridDrawer.getCircleGrid().getCircleGrid().add(circles);
+            this.circleGrid.getCircleGrid().add(circles);
         }
 
-        JoinFiveGridDrawer.drawCrossOnEmptyGrid(this.joinFiveGridDrawer.getCircleGrid());
+        JoinFiveGridDrawer.drawCrossOnEmptyGrid(this.circleGrid);
 
         stage.setScene(new Scene(group));
         stage.setTitle("Grid");
         stage.show();
-    }
-
-    public void activateCircleEvent(MouseEvent mouseEvent) {
-        Circle c = (Circle) mouseEvent.getSource();
-
-        //verifier si le point cliqué est dans une ligne de 5 (verticale, horizontale, diagonale)
-
-        //avoir la position du point cliqué
-        //checker dans les 8 directions si on a une ligne de 5
-        //if()...
-
-        //afficher le point
-        c.setOpacity(1);
-        c.toFront();
-
-        //dessiner la ligne
-
-        LinkedList<Circle> jfLine = new LinkedList<Circle>();
-
-        jfLine.add(joinFiveGridDrawer
-                .getCircleGrid()
-                .getCircleFromCoordonates(
-                        Coordinates.of(5, 10)));
-        jfLine.add(joinFiveGridDrawer
-                .getCircleGrid()
-                .getCircleFromCoordonates(
-                        Coordinates.of(5, 11)));
-
-        LineDrawer.drawLine(new JFLine(jfLine), group);
-
-        //augmenter le score du joueur
-
-        //else: on fait rien / on affiche que le point n'est pas cliquable
-
     }
 }

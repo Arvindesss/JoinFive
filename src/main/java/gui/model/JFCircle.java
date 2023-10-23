@@ -8,6 +8,11 @@ public class JFCircle {
 
     private Coordinates coordinates;
 
+    public JFCircle(Circle circle, Coordinates coordinates) {
+        this.circle = circle;
+        this.coordinates = coordinates;
+    }
+
     public Circle getCircle() {
         return circle;
     }

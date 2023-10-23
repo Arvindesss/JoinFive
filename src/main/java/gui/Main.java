@@ -1,9 +1,10 @@
 package gui;
-import javafx.application.Application;
+
+import gui.controller.HomeController;
 
 public class Main {
 
     public static void main(String[] args) {
-        Application.launch(Home.class,(String) null);
+        HomeController.openHomeView();
     }
 }

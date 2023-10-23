@@ -1,4 +1,4 @@
-package gui;
+package gui.view;
 
 import com.sun.javafx.css.StyleManager;
 import gui.model.Player;

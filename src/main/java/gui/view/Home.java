@@ -1,7 +1,7 @@
-package gui;
+package gui.view;
 
-import gui.view.JoinFiveGridView;
-import gui.view.MenuView;
+import gui.controller.GameController;
+import gui.controller.HomeController;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -30,26 +30,8 @@ public class Home extends Application {
 
         centerButton.setOnAction(event ->
         {
-            //todo: Ajouter la liaison vers le deuxième écran
-
-           /* JFrame frame = new JFrame("Join Five Game");
-            frame.setSize(900, 600);
-            JPanel game = new GameView();
-
-            frame.setContentPane(game);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-*/
-            Stage stage1 = new Stage();
-            JoinFiveGridView gridView = new JoinFiveGridView();
-            gridView.start(stage1);
-
-            Stage stage2 = new Stage();
-            MenuView menu = new MenuView();
-            //menu.setGv(game);
-            menu.start(stage2);
-            primaryStage.close();
+            GameController.displayGameView();
+            HomeController.closeHomeView(primaryStage);
         });
 
         centerButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");

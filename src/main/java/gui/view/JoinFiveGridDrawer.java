@@ -8,8 +8,6 @@ import java.util.List;
 
 public class JoinFiveGridDrawer {
 
-    CircleGrid circleGrid = new CircleGrid();
-
     public static void drawCrossOnEmptyGrid(CircleGrid pg) {
         List<Coordinates> circlesToDisplay = getCrossCoordonates();
         for (Coordinates c : circlesToDisplay) {
@@ -54,8 +52,5 @@ public class JoinFiveGridDrawer {
 
         return circlesToDisplay;
     }
-
-    public CircleGrid getCircleGrid() {
-        return circleGrid;
-    }
 }
+
