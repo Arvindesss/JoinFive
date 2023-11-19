@@ -1,4 +1,4 @@
-package gui.view;
+package gui.view.screens;
 
 import javafx.application.Application;
 import javafx.geometry.Pos;
@@ -50,9 +50,9 @@ public class MenuView extends Application {
         randomSolve.setPrefHeight(50);
 
         // label score
-       
+
         // label mode
-        if (gui.Home.mode) {
+        if (Home.mode) {
             mode.setText("Mode de jeu : 5D");
         } else {
             mode.setText("Mode de jeu : 5T");

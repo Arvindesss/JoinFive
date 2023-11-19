@@ -15,12 +15,21 @@ public class Player {
         this.score = new SimpleDoubleProperty(score);
     }
 
+    public Player(String name) {
+        this.name = new SimpleStringProperty(name);
+        this.score = new SimpleDoubleProperty(0);
+    }
+
     public StringProperty nameProperty() {
         return name;
     }
 
     public DoubleProperty scoreProperty() {
         return score;
+    }
+
+    public void addScore(double score) {
+        this.score.set(this.score.doubleValue() + 1);
     }
 
     public double getScore() {

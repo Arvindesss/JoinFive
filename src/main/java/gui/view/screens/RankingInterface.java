@@ -1,4 +1,4 @@
-package gui;
+package gui.view.screens;
 
 import com.sun.javafx.css.StyleManager;
 import gui.model.Player;

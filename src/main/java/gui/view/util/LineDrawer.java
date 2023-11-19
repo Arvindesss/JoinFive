@@ -1,25 +1,23 @@
-package gui.view;
+package gui.view.util;
 
+import gui.model.JFCircle;
 import gui.model.JFLine;
 import javafx.scene.Group;
 import javafx.scene.paint.Color;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Line;
 
 public class LineDrawer {
 
     public static void drawLine(JFLine circlesLine, Group pane) {
         //we need the coordinates of start and end point
+        JFCircle firstCircle = circlesLine.getAlignedCircles().get(0);
+        JFCircle lastCircle = null;
 
-        Circle firstCircle = circlesLine.getAlignedCircles().get(0);
-        Circle lastCircle = new Circle();
-
-        for (Circle c : circlesLine.getAlignedCircles()) {
+        for (JFCircle c : circlesLine.getAlignedCircles()) {
             lastCircle = c;
         }
 
-        Line line = new Line(firstCircle.getCenterX(), firstCircle.getCenterY(), lastCircle.getCenterX(), lastCircle.getCenterY());
-        //Line line = new Line(55, 50, 500, 500);
+        Line line = new Line(firstCircle.getCircle().getCenterX(), firstCircle.getCircle().getCenterY(), lastCircle.getCircle().getCenterX(), lastCircle.getCircle().getCenterY());
         line.setStroke(Color.RED);
         line.setStrokeWidth(4);
         pane.getChildren().add(line);
