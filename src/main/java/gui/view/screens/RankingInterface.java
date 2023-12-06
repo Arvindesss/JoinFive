@@ -1,4 +1,4 @@
-package gui;
+package gui.view.screens;
 
 import com.sun.javafx.css.StyleManager;
 import gui.model.Player;
@@ -19,19 +19,14 @@ import java.util.Comparator;
 import java.util.List;
 
 public class RankingInterface extends Application {
-   /* @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/test.fxml")));
+    private List<Player> players;
 
-        Scene s = new Scene(root, 400, 400);
-
-        primaryStage.setScene(s);
-
-        primaryStage.show();
-    }*/
+    public RankingInterface(List<Player> players) {
+        this.players = players;
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
 
         Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
         StyleManager.getInstance().addUserAgentStylesheet("/css/global.css");
@@ -91,9 +86,7 @@ public class RankingInterface extends Application {
         primaryStage.show();
     }
 
-    private List<Player> parsePlayerList() {
-        // parse and construct User datamodel list by looping your ResultSet rs
-        // and return the list
+    public static List<Player> parsePlayerList() {
         List<Player> players = new ArrayList<>();
         players.add(new Player("Josko", 50));
         players.add(new Player("Cisco", 100));

@@ -1,11 +1,13 @@
-package gui;
+package gui.view.screens;
 
-import gui.view.JoinFiveGridView;
-import gui.view.MenuView;
+import gui.controller.CreateAccountScreenController;
+import gui.controller.GameController;
+import gui.controller.HomeController;
 import javafx.application.Application;
-import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.layout.*;
 import javafx.stage.Stage;
@@ -16,45 +18,29 @@ public class Home extends Application {
     @Override
     public void start(Stage primaryStage) {
         // Crée un StackPane
-        StackPane stackPane = new StackPane();
+        VBox stackPane = new VBox();
 
-        Button topButton = new Button("Morpion Solitaire");
-        topButton.setStyle("-fx-background-color: #4CAF50; " +
+        Label gameTitle = new Label("Morpion Solitaire");
+        gameTitle.setStyle("-fx-background-color: #4CAF50; " +
                 "-fx-text-fill: white; " +
                 "-fx-font-size: 16px; " +
                 "-fx-padding: 10px 20px;");
-        topButton.setPrefWidth(400);
-        topButton.setPrefHeight(50);
+        gameTitle.setPrefWidth(400);
+        gameTitle.setPrefHeight(50);
 
-        Button centerButton = new Button("Jouer");
+        TextField playerField = new TextField();
+        playerField.setStyle("-fx-text-fill: #FFB4B4;");
+        playerField.setPromptText("Identifiant du joueur");
 
-        centerButton.setOnAction(event ->
+        Button playButton = new Button("Jouer");
+
+        playButton.setOnAction(event ->
         {
-            //todo: Ajouter la liaison vers le deuxième écran
-
-           /* JFrame frame = new JFrame("Join Five Game");
-            frame.setSize(900, 600);
-            JPanel game = new GameView();
-
-            frame.setContentPane(game);
-            frame.setVisible(true);
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.pack();
-*/
-            Stage stage1 = new Stage();
-            JoinFiveGridView gridView = new JoinFiveGridView();
-            gridView.start(stage1);
-
-            Stage stage2 = new Stage();
-            MenuView menu = new MenuView();
-            //menu.setGv(game);
-            menu.start(stage2);
-            primaryStage.close();
+            GameController.displayGameView();
+            HomeController.closeHomeView(primaryStage);
         });
 
-        centerButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
-        centerButton.setPrefWidth(300);
-        centerButton.setPrefHeight(100);
+        playButton.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
 
         // Crée deux nouveaux boutons
         Button rightButton = new Button("5D");
@@ -90,18 +76,22 @@ public class Home extends Application {
             getHostServices().showDocument("http://joinfive.com/index.php?a=a");
         });
 
-        // Crée un HBox pour les boutons du bas
-        HBox bottomButtonsBox = new HBox(leftButton, middleButton, rightButton);
-        bottomButtonsBox.setSpacing(40); // Optional: Set spacing between buttons
-        bottomButtonsBox.setAlignment(Pos.CENTER); // Align buttons to the center
+        Button btnSignUp = new Button("S'inscrire");
+        btnSignUp.setStyle("-fx-background-color: green; -fx-text-fill: white;");
+        btnSignUp.setPrefHeight(50);
+        btnSignUp.setPrefWidth(100);
+        btnSignUp.setOnAction(event -> {
+            CreateAccountScreenController.displayAccountCreationScreen();
+            HomeController.closeHomeView(primaryStage);
+        });
 
-        // Crée un VBox pour les boutons centraux et ceux du bas
-        VBox allButtonsBox = new VBox(topButton, centerButton, bottomButtonsBox);
-        allButtonsBox.setAlignment(Pos.CENTER); // Align VBox content to the center
-        allButtonsBox.setSpacing(60); // Optional: Set spacing between buttons and bottomButtonsBox
-
-        // Ajoute le VBox au StackPane
-        stackPane.getChildren().add(allButtonsBox);
+        stackPane.getChildren().add(gameTitle);
+        stackPane.getChildren().add(playerField);
+        stackPane.getChildren().add(leftButton);
+        stackPane.getChildren().add(middleButton);
+        stackPane.getChildren().add(btnSignUp);
+        stackPane.getChildren().add(rightButton);
+        stackPane.getChildren().add(playButton);
 
         // Charge l'image de fond
         BackgroundImage backgroundImage = new BackgroundImage(

@@ -15,6 +15,11 @@ public class Player {
         this.score = new SimpleDoubleProperty(score);
     }
 
+    public Player(String name) {
+        this.name = new SimpleStringProperty(name);
+        this.score = new SimpleDoubleProperty(0);
+    }
+
     public StringProperty nameProperty() {
         return name;
     }
@@ -23,7 +28,19 @@ public class Player {
         return score;
     }
 
+    public void addScore() {
+        this.score.set(this.score.doubleValue() + 1);
+    }
+
+    public void decreaseScore() {
+        this.score.set(this.score.doubleValue() - 1);
+    }
+
     public double getScore() {
         return score.get();
+    }
+
+    public void resetScore() {
+        this.score.set(0);
     }
 }
