@@ -1,22 +1,36 @@
 package gui.model;
 
-import javafx.scene.shape.Circle;
+import gui.controller.util.CoordinatesValidator;
+import gui.view.util.TechnicalCoordinates;
+import gui.view.util.converter.CoordinatesToTechnicalCoordinatesConverter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class CircleGrid {
-    private List<List<Circle>> circleGrid;
+    private List<List<JFCircle>> circleGrid;
 
     public CircleGrid() {
         this.circleGrid = new ArrayList<>();
     }
 
-    public List<List<Circle>> getCircleGrid() {
+    public List<List<JFCircle>> getCircleGrid() {
         return circleGrid;
     }
 
-    public Circle getCircleFromCoordonates(Coordinates c) {
-        return this.getCircleGrid().get(c.getY()).get(c.getX());
+    public JFCircle getCircleFromCoordinates(Coordinates c) {
+        TechnicalCoordinates tc = CoordinatesToTechnicalCoordinatesConverter.convert(c);
+        return this.getCircleGrid().get(tc.getX()).get(tc.getY());
+    }
+
+    public List<JFCircle> getNeighbors(final Coordinates coordinates) {
+        List<JFCircle> neighbors = new ArrayList<>();
+        for (Direction d : Direction.values()) {
+            Coordinates neighbor = Coordinates.of(coordinates.getX() + d.getDx(), coordinates.getY() + d.getDy());
+            if (CoordinatesValidator.validate(neighbor)) {
+                neighbors.add(getCircleFromCoordinates(neighbor));
+            }
+        }
+        return neighbors;
     }
 }
