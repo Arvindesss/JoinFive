@@ -1,9 +1,13 @@
 package gui;
-import javafx.application.Application;
+
+import gui.controller.HomeController;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class Main {
 
-    public static void main(String[] args) {
-        Application.launch(Home.class,(String) null);
+    public static void main(String[] args) throws SQLException, IOException {
+        HomeController.launchHomeView();
     }
 }

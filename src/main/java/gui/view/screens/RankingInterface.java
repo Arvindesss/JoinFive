@@ -1,4 +1,4 @@
-package gui;
+package gui.view.screens;
 
 import com.sun.javafx.css.StyleManager;
 import gui.model.Player;
@@ -15,36 +15,30 @@ import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 public class RankingInterface extends Application {
-   /* @Override
-    public void start(Stage primaryStage) throws Exception {
-        Parent root = FXMLLoader.load(Objects.requireNonNull(getClass().getResource("/test.fxml")));
+    private List<Player> players = new ArrayList<>();
 
-        Scene s = new Scene(root, 400, 400);
+    public RankingInterface(List<Player> players) {
+        this.players = players;
+    }
 
-        primaryStage.setScene(s);
+    public RankingInterface() {
 
-        primaryStage.show();
-    }*/
+    }
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-
+    public void start(Stage primaryStage) {
         Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
         StyleManager.getInstance().addUserAgentStylesheet("/css/global.css");
-
         Font.loadFont(getClass().getResourceAsStream("/css/global.css"), 12);
 
         StackPane stackPane = new StackPane();
 
         Scene s = new Scene(stackPane, 400, 400);
 
-        s.getStylesheets().add("css/global.css");
-
-        Label lblTitle = new Label("Rang des joueurs");
+        Label lblTitle = new Label("2P Rang des joueurs");
         lblTitle.getStyleClass().add("title");
 
         StackPane.setAlignment(lblTitle, Pos.TOP_CENTER);
@@ -63,7 +57,7 @@ public class RankingInterface extends Application {
         tableView.getColumns().add(playerNameCol);
         tableView.getColumns().add(playerScoreCol);
 
-        tableView.getItems().setAll(parsePlayerList());
+        tableView.getItems().setAll(this.players);
 
         // Histogramme
 
@@ -89,18 +83,5 @@ public class RankingInterface extends Application {
         primaryStage.setScene(s);
 
         primaryStage.show();
-    }
-
-    private List<Player> parsePlayerList() {
-        // parse and construct User datamodel list by looping your ResultSet rs
-        // and return the list
-        List<Player> players = new ArrayList<>();
-        players.add(new Player("Josko", 50));
-        players.add(new Player("Cisco", 100));
-        players.add(new Player("Dansko", 22));
-
-        players.sort(Comparator.comparing(Player::getScore));
-
-        return players;
     }
 }

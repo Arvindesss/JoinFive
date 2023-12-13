@@ -1,5 +1,6 @@
-package gui.view;
+package gui.view.screens;
 
+import com.sun.javafx.css.StyleManager;
 import javafx.application.Application;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -7,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 public class MenuView extends Application {
@@ -21,6 +23,9 @@ public class MenuView extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        Application.setUserAgentStylesheet(Application.STYLESHEET_MODENA);
+        StyleManager.getInstance().addUserAgentStylesheet("/css/global.css");
+        Font.loadFont(getClass().getResourceAsStream("/css/global.css"), 12);
 
         // bouton restart
         restart.setOnAction(event ->
@@ -48,16 +53,7 @@ public class MenuView extends Application {
         randomSolve.setStyle("-fx-background-color: grey; -fx-text-fill: white;");
         randomSolve.setPrefWidth(100);
         randomSolve.setPrefHeight(50);
-
-        // label score
-       
-        // label mode
-        if (gui.Home.mode) {
-            mode.setText("Mode de jeu : 5D");
-        } else {
-            mode.setText("Mode de jeu : 5T");
-        }
-
+        
         VBox buttonBox = new VBox(10, restart, hint, randomSolve, mode);
         StackPane scorePane = new StackPane(scoreLabel);
         StackPane gameNamePane = new StackPane(gameNameLabel);
