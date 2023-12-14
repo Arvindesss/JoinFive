@@ -1,4 +1,4 @@
-package gui.view;
+package gui.view.util;
 
 import gui.model.CircleGrid;
 import gui.model.Coordinates;
@@ -8,13 +8,12 @@ import java.util.List;
 
 public class JoinFiveGridDrawer {
 
-    CircleGrid circleGrid = new CircleGrid();
-
     public static void drawCrossOnEmptyGrid(CircleGrid pg) {
         List<Coordinates> circlesToDisplay = getCrossCoordonates();
         for (Coordinates c : circlesToDisplay) {
-            pg.getCircleFromCoordonates(c).setOpacity(1);
-            pg.getCircleFromCoordonates(c).toFront();
+            pg.getCircleFromCoordinates(c).getCircle().setOpacity(1);
+            pg.getCircleFromCoordinates(c).getCircle().toFront();
+            pg.getCircleFromCoordinates(c).setPlayed(true);
         }
     }
 
@@ -54,8 +53,5 @@ public class JoinFiveGridDrawer {
 
         return circlesToDisplay;
     }
-
-    public CircleGrid getCircleGrid() {
-        return circleGrid;
-    }
 }
+
