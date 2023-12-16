@@ -1,6 +1,7 @@
 package gui.model.jdbc;
 
 import gui.model.Player;
+import gui.view.util.ConnectionEncryptedInputDTO;
 import gui.view.util.ConnectionInputDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,11 +18,11 @@ public class PlayerDAO {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(PlayerDAO.class);
 
-    public static void insertNewPlayer(ConnectionInputDTO inputs, Connection connection) throws SQLException {
+    public static void insertNewPlayer(ConnectionEncryptedInputDTO inputs, Connection connection) throws SQLException {
         PreparedStatement insertStatement = connection
                 .prepareStatement("INSERT INTO PLAYER (username, password) VALUES (?,?);");
         insertStatement.setString(1, inputs.getUsername());
-        insertStatement.setString(2, inputs.getPassword());
+        insertStatement.setString(2, inputs.getEncryptedPassword());
         insertStatement.executeUpdate();
     }
 

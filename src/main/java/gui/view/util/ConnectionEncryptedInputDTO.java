@@ -2,15 +2,15 @@ package gui.view.util;
 
 import gui.view.util.exception.InvalidInputException;
 
-public class ConnectionInputDTO {
+public class ConnectionEncryptedInputDTO {
 
     private final String username;
 
-    private final String password;
+    private final String encryptedPassword;
 
-    private ConnectionInputDTO(String username, String password) {
+    private ConnectionEncryptedInputDTO(String username, String encryptedPassword) {
         this.username = username;
-        this.password = password;
+        this.encryptedPassword = encryptedPassword;
     }
 
     private static void validate(String username, String password){
@@ -22,16 +22,16 @@ public class ConnectionInputDTO {
         }
     }
 
-    public static ConnectionInputDTO of(String username, String password) {
+    public static ConnectionEncryptedInputDTO of(String username, String password) {
         validate(username, password);
-        return new ConnectionInputDTO(username, password);
+        return new ConnectionEncryptedInputDTO(username, password);
     }
 
     public String getUsername() {
         return username;
     }
 
-    public String getPassword() {
-        return password;
+    public String getEncryptedPassword() {
+        return encryptedPassword;
     }
 }

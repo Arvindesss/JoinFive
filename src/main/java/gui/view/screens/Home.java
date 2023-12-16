@@ -5,6 +5,7 @@ import gui.controller.CreateAccountScreenController;
 import gui.controller.GameController;
 import gui.controller.HomeController;
 import gui.controller.RankingInterfaceController;
+import gui.model.Player;
 import gui.view.util.ConnectionInputDTO;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -22,9 +23,12 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class Home extends Application {
 
@@ -48,6 +52,11 @@ public class Home extends Application {
         gameTitle.setAlignment(Pos.BASELINE_CENTER);
         gameTitle.setPrefHeight(30);
 
+        vBox.getChildren().add(gameTitle);
+
+        Label lblErrorResponse = new Label();
+        lblErrorResponse.getStyleClass().add("orange");
+
         Label lblPlayerField = new Label("Identifiant du joueur");
         lblPlayerField.getStyleClass().add("white");
         TextField playerField = new TextField();
@@ -68,17 +77,21 @@ public class Home extends Application {
         {
             try {
                 ConnectionInputDTO connectionInputDTO = ConnectionInputDTO.of(playerField.getText(), passwordField.getText());
-                if (HomeController.validatePlayerConnectionData(connectionInputDTO)) {
+                Optional<Player> player = HomeController.readPlayer(connectionInputDTO);
+                if (!player.isPresent()) {
+                    lblErrorResponse.setText("Compte introuvable");
+                    return;
+                }
+                if(!HomeController.validatePassword(connectionInputDTO.getPassword(), player.get())){
+                    lblErrorResponse.setText("Mot de passe incorrect");
+                } else {
                     GameController.displayGameView(connectionInputDTO);
                     HomeController.closeHomeView(primaryStage);
-                } else {
-                    System.out.println("je ne te connais pas ");
                 }
-            } catch (IOException | SQLException e) {
-
+            } catch (Exception e) {
+                lblErrorResponse.setText(e.getMessage());
                 throw new RuntimeException(e);
             }
-
         });
 
         btnPlay.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
@@ -113,11 +126,11 @@ public class Home extends Application {
             HomeController.closeHomeView(primaryStage);
         });
 
-        vBox.getChildren().add(gameTitle);
 
-        VBox fieldsVBox = new VBox(lblPlayerField, playerField, lblPasswordField, passwordField);
+
+        VBox fieldsVBox = new VBox(lblErrorResponse, lblPlayerField, playerField, lblPasswordField, passwordField);
         fieldsVBox.setSpacing(15);
-        fieldsVBox.setPadding(new Insets(50, 50, 50, 50));
+        fieldsVBox.setPadding(new Insets(40, 40, 40, 40));
         vBox.getChildren().add(fieldsVBox);
 
         HBox firstLine = new HBox(btnSignUp, btnPlay);
@@ -153,4 +166,6 @@ public class Home extends Application {
         primaryStage.show();
 
     }
+
+
 }

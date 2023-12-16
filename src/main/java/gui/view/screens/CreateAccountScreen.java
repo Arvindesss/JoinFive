@@ -3,6 +3,7 @@ package gui.view.screens;
 import com.sun.javafx.css.StyleManager;
 import gui.controller.CreateAccountScreenController;
 import gui.controller.HomeController;
+import gui.view.util.ConnectionEncryptedInputDTO;
 import gui.view.util.ConnectionInputDTO;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -48,6 +49,9 @@ public class CreateAccountScreen extends Application {
 
         vBox.getChildren().add(signInLabel);
 
+        Label lblErrorResponse = new Label();
+        lblErrorResponse.getStyleClass().add("orange");
+
         Label lblUsernameField = new Label("Identifiant de joueur");
         lblUsernameField.getStyleClass().add("white");
         TextField usernameField = new TextField();
@@ -60,9 +64,9 @@ public class CreateAccountScreen extends Application {
         passwordField.setMaxWidth(300);
         passwordField.setPromptText("Mot de passe");
 
-        VBox fieldsVBox = new VBox(lblUsernameField, usernameField, lblPasswordField, passwordField);
+        VBox fieldsVBox = new VBox(lblErrorResponse, lblUsernameField, usernameField, lblPasswordField, passwordField);
         fieldsVBox.setSpacing(15);
-        fieldsVBox.setPadding(new Insets(50, 50, 50, 50));
+        fieldsVBox.setPadding(new Insets(40, 40, 40, 40));
         vBox.getChildren().add(fieldsVBox);
 
         Button btnReturn = new Button("Retour");
@@ -74,16 +78,18 @@ public class CreateAccountScreen extends Application {
             CreateAccountScreenController.closeView(primaryStage);
         }));
 
-        Button btnValidate = new Button("Validate");
+        Button btnValidate = new Button("Valider");
         btnValidate.setStyle("-fx-background-color: blue; -fx-text-fill: white;");
         btnValidate.setPrefWidth(175);
         btnValidate.setPrefHeight(30);
         btnValidate.setOnAction(event ->
         {
             try {
-                String encryptedPassword = new BCryptPasswordEncoder().encode(passwordField.getText());
-                HomeController.addPlayer(ConnectionInputDTO.of(usernameField.getText(), encryptedPassword));
-            } catch (IOException | SQLException e) {
+                ConnectionInputDTO connectionInputDTO = ConnectionInputDTO.of(usernameField.getText(), passwordField.getText());
+                String encryptedPassword = new BCryptPasswordEncoder().encode(connectionInputDTO.getPassword());
+                HomeController.addPlayer(ConnectionEncryptedInputDTO.of(usernameField.getText(), encryptedPassword));
+            } catch (Exception e) {
+                lblErrorResponse.setText(e.getMessage());
                 throw new RuntimeException(e);
             }
             HomeController.openHomeView();

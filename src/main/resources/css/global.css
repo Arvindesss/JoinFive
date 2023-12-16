@@ -7,8 +7,11 @@
     -fx-font-family: "Press Start 2P";
 }
 
-.title {
+.title-screen {
     -fx-font-size: 16px;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
 }
 
 .white {
@@ -17,6 +20,11 @@
 
 .white:focused {
     -fx-text-fill: white;
+}
+
+
+.orange {
+    -fx-text-fill: orange;
 }
 
 .bg-blue {

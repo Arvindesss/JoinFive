@@ -3,6 +3,7 @@ package gui.controller;
 import gui.model.Player;
 import gui.model.jdbc.PlayerDAO;
 import gui.view.screens.Home;
+import gui.view.util.ConnectionEncryptedInputDTO;
 import gui.view.util.ConnectionInputDTO;
 import javafx.application.Application;
 import javafx.stage.Stage;
@@ -29,7 +30,7 @@ public class HomeController {
         homeStage.close();
     }
 
-    public static void addPlayer(ConnectionInputDTO inputDTO) throws IOException, SQLException {
+    public static void addPlayer(ConnectionEncryptedInputDTO inputDTO) throws IOException, SQLException {
 
         Properties properties = new Properties();
         properties.load(HomeController.class.getClassLoader().getResourceAsStream("application.properties"));
@@ -38,13 +39,14 @@ public class HomeController {
         PlayerDAO.insertNewPlayer(inputDTO, connection);
     }
 
-    public static boolean validatePlayerConnectionData(ConnectionInputDTO inputDTO) throws IOException, SQLException {
+    public static Optional<Player> readPlayer(ConnectionInputDTO inputDTO) throws IOException, SQLException {
         Properties properties = new Properties();
         properties.load(HomeController.class.getClassLoader().getResourceAsStream("application.properties"));
         Connection connection = DriverManager.getConnection(properties.getProperty("url"), properties);
+        return PlayerDAO.readPlayer(inputDTO.getUsername(), connection);
+    }
 
-        Optional<Player> player = PlayerDAO.readPlayer(inputDTO.getUsername(), connection);
-
-        return player.filter(value -> new BCryptPasswordEncoder().matches(inputDTO.getPassword(), value.getSaltedPassword())).isPresent();
+    public static boolean validatePassword(String password, Player player) {
+        return new BCryptPasswordEncoder().matches(password, player.getSaltedPassword());
     }
 }
