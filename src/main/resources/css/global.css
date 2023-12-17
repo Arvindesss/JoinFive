@@ -1,17 +1,78 @@
 @font-face {
-    -fx-font-family: Inter;
-    src: url('../fonts/inter/static/Inter-Bold.ttf');
+    -fx-font-family: "Press Start 2P";
+    src: url('../fonts/inter/static/PressStart2P.ttf');
 }
 
 * {
-    -fx-font-family: Inter;
+    -fx-font-family: "Press Start 2P";
 }
 
-.title {
-    -fx-background-color: #FFB4B4;
-    -fx-background-radius: 10px;
-    -fx-font-size: 30px;
-    -fx-font-weight: bold;
-    -fx-text-fill: #995C5C;
-    -fx-padding: 10px;
+.title-screen {
+    -fx-font-size: 16px;
+    -fx-border-color: white;
+    -fx-border-width: 1px;
+    -fx-border-style: solid;
+}
+
+.white {
+    -fx-text-fill: white;
+}
+
+.white:focused {
+    -fx-text-fill: white;
+}
+
+
+.orange {
+    -fx-text-fill: orange;
+}
+
+.bg-blue {
+    -fx-background-color: blue;
+}
+
+.bg-blue:focused {
+    -fx-background-color: blue;
+}
+
+.bg-green {
+    -fx-background-color: green;
+}
+
+.bg-green:focused {
+    -fx-background-color: green;
+}
+
+
+/* Styling TableView */
+.table-view {
+    -fx-control-inner-background: #ffffff;
+    -fx-table-cell-border-color: #dddddd;
+}
+
+/* Styling header row */
+.table-view .column-header-background {
+    -fx-background-color: #00f807;
+    -fx-text-fill: white;
+}
+
+/* Styling even rows */
+.table-view {
+    -fx-background-color: #f2f2f2;
+}
+
+/* Styling odd rows */
+.table-view {
+    -fx-background-color: #ff0505;
+}
+
+/* Styling selected row */
+.table-view .row-cell:selected {
+    -fx-background-color: #007eff;
+    -fx-table-cell-border-color: #99c2ff;
+}
+
+/* Styling hover effect */
+.table-row-cell:hover {
+    -fx-background-color: #e6f7ff;
 }
