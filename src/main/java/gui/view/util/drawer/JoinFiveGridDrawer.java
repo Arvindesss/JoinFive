@@ -1,24 +1,34 @@
-package gui.view;
+package gui.view.util.drawer;
 
-import gui.model.CircleGrid;
 import gui.model.Coordinates;
+import gui.model.JFGrid;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class JoinFiveGridDrawer {
 
-    CircleGrid circleGrid = new CircleGrid();
-
-    public static void drawCrossOnEmptyGrid(CircleGrid pg) {
-        List<Coordinates> circlesToDisplay = getCrossCoordonates();
+    /**
+     * Draws a cross on an empty game grid
+     *
+     * @param pg an empty game grid
+     * @return the list of desired circles to draw a cross
+     */
+    public static void drawCrossOnEmptyGrid(JFGrid pg) {
+        List<Coordinates> circlesToDisplay = getCrossCoordinates();
         for (Coordinates c : circlesToDisplay) {
-            pg.getCircleFromCoordonates(c).setOpacity(1);
-            pg.getCircleFromCoordonates(c).toFront();
+            pg.getCircleFromCoordinates(c).getCircle().setOpacity(1);
+            pg.getCircleFromCoordinates(c).getCircle().toFront();
         }
     }
 
-    private static List<Coordinates> getCrossCoordonates() {
+    /**
+     * Contains boilerplate code to get all coordinates of the circles we want to display in order to render
+     * a cross on game grid
+     *
+     * @return the list of desired circles to draw a cross
+     */
+    private static List<Coordinates> getCrossCoordinates() {
 
         List<Coordinates> circlesToDisplay = new ArrayList<>();
 
@@ -51,11 +61,7 @@ public class JoinFiveGridDrawer {
             circlesToDisplay.add(Coordinates.of(i, 10));
             circlesToDisplay.add(Coordinates.of(i + 6, 10));
         }
-
         return circlesToDisplay;
     }
-
-    public CircleGrid getCircleGrid() {
-        return circleGrid;
-    }
 }
+
